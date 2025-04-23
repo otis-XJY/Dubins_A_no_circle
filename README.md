@@ -1,4 +1,4 @@
-Dubins-A*: A New Global Path Planning Scheme for Fixed-Wing UAV with Irregular Obstacles Avoidance（https://ieeexplore.ieee.org/document/10673407）
+**Dubins-A*: A New Global Path Planning Scheme for Fixed-Wing UAV with Irregular Obstacles Avoidance（https://ieeexplore.ieee.org/document/10673407）**
 @INPROCEEDINGS{10673407,
   author={Xu, Junyi and Shi, Mengji and Tang, Fan and Sun, Xinyu and Yue, Jiangfeng and Lin, Boxian and Qin, Kaiyu},
   booktitle={2024 7th International Conference on Electronics Technology (ICET)}, 
