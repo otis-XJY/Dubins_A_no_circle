@@ -1,7 +1,6 @@
 # Dubins-A*: A New Global Path Planning Scheme for Fixed-Wing UAV with Irregular Obstacles Avoidance**  
-link: https://ieeexplore.ieee.org/document/10673407
-cite: 
-@INPROCEEDINGS{10673407,
+link: https://ieeexplore.ieee.org/document/10673407   
+```@INPROCEEDINGS{10673407,
   author={Xu, Junyi and Shi, Mengji and Tang, Fan and Sun, Xinyu and Yue, Jiangfeng and Lin, Boxian and Qin, Kaiyu},
   booktitle={2024 7th International Conference on Electronics Technology (ICET)}, 
   title={Dubins-A*: A New Global Path Planning Scheme for Fixed-Wing UAV with Irregular Obstacles Avoidance}, 
@@ -10,4 +9,4 @@ cite:
   number={},
   pages={636-641},
   keywords={Shape;Navigation;Kinematics;Autonomous aerial vehicles;Search problems;Path planning;Robustness;Path Planning;A*algorithm;Dubins Curves;Fixed-wing UAV},
-  doi={10.1109/ICET61945.2024.10673407}}
+  doi={10.1109/ICET61945.2024.10673407}}```
