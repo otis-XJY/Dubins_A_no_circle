@@ -1,0 +1,46 @@
+function param=Dubins_Run(U,T,R_dubins,C_obs,step)
+%% 定义参数
+Start_X = U(1);                                    %初始位置x坐标
+Start_Y = U(2);                                  %初始位置y坐标
+Start_Theta=transform_theta(U(3));                 %初始速度与x轴的夹角
+r = R_dubins;                                          %最小旋转半径
+Dx = C_obs(1);                                         %目标区域圆心x坐标
+Dy = C_obs(2);                                         %目标区域圆心y坐标
+R = C_obs(3);                                          %目标区域障碍半径
+Cx = T(1);                                         %目标位置x坐标
+Cy = T(2);                                        %目标位置y坐标
+Stepsize = step;                                 %步长               
+End_Theta = transform_theta(T(3));               %到达点速度与x轴的夹角
+End_Vx = cos(End_Theta);%方向
+End_Vy = sin(End_Theta);
+
+End_X2 = [ (Cx*End_Vy^2 + Dx*End_Vx^2 + End_Vx*(- Cx^2*End_Vy^2 + 2*Cx*Cy*End_Vx*End_Vy + 2*Cx*Dx*End_Vy^2 - 2*Cx*Dy*End_Vx*End_Vy - Cy^2*End_Vx^2 - 2*Cy*Dx*End_Vx*End_Vy + 2*Cy*Dy*End_Vx^2 - Dx^2*End_Vy^2 + 2*Dx*Dy*End_Vx*End_Vy - Dy^2*End_Vx^2 + End_Vx^2*R^2 + End_Vy^2*R^2)^(1/2) - Cy*End_Vx*End_Vy + Dy*End_Vx*End_Vy)/(End_Vx^2 + End_Vy^2)
+  (Cx*End_Vy^2 + Dx*End_Vx^2 - End_Vx*(- Cx^2*End_Vy^2 + 2*Cx*Cy*End_Vx*End_Vy + 2*Cx*Dx*End_Vy^2 - 2*Cx*Dy*End_Vx*End_Vy - Cy^2*End_Vx^2 - 2*Cy*Dx*End_Vx*End_Vy + 2*Cy*Dy*End_Vx^2 - Dx^2*End_Vy^2 + 2*Dx*Dy*End_Vx*End_Vy - Dy^2*End_Vx^2 + End_Vx^2*R^2 + End_Vy^2*R^2)^(1/2) - Cy*End_Vx*End_Vy + Dy*End_Vx*End_Vy)/(End_Vx^2 + End_Vy^2)
+  ]; 
+End_Y2 = [ (Cy*End_Vx^2 + Dy*End_Vy^2 + End_Vy*(- Cx^2*End_Vy^2 + 2*Cx*Cy*End_Vx*End_Vy + 2*Cx*Dx*End_Vy^2 - 2*Cx*Dy*End_Vx*End_Vy - Cy^2*End_Vx^2 - 2*Cy*Dx*End_Vx*End_Vy + 2*Cy*Dy*End_Vx^2 - Dx^2*End_Vy^2 + 2*Dx*Dy*End_Vx*End_Vy - Dy^2*End_Vx^2 + End_Vx^2*R^2 + End_Vy^2*R^2)^(1/2) - Cx*End_Vx*End_Vy + Dx*End_Vx*End_Vy)/(End_Vx^2 + End_Vy^2) 
+ (Cy*End_Vx^2 + Dy*End_Vy^2 - End_Vy*(- Cx^2*End_Vy^2 + 2*Cx*Cy*End_Vx*End_Vy + 2*Cx*Dx*End_Vy^2 - 2*Cx*Dy*End_Vx*End_Vy - Cy^2*End_Vx^2 - 2*Cy*Dx*End_Vx*End_Vy + 2*Cy*Dy*End_Vx^2 - Dx^2*End_Vy^2 + 2*Dx*Dy*End_Vx*End_Vy - Dy^2*End_Vx^2 + End_Vx^2*R^2 + End_Vy^2*R^2)^(1/2) - Cx*End_Vx*End_Vy + Dx*End_Vx*End_Vy)/(End_Vx^2 + End_Vy^2)
+ ];                                             %目标方向上的延长线与圆交（两）点的x坐标
+
+plot(End_X2,End_Y2,'*','MarkerSize',30);
+
+
+index1 = find(End_Vx*(End_X2 - Cx)<=0);
+index2 = find(End_Vy*(End_Y2 - Cy)<=0) ;
+End_X = End_X2(index1);
+End_Y = End_Y2(index2);
+% syms x y;
+% eq1 = (x-Dx)^2+(y-Dy)^2-R^2;
+% eq2 = End_Vx*y-End_Vy*x+Cx*End_Vy-Cy*End_Vx;
+% [End_X,End_Y]= solve(eq1,eq2,End_Vx*(x-Cx)<=0,End_Vy*(y-Cy)<=0); %到达点的位置
+% End_X = double(End_X);
+% End_Y = double(End_Y);
+%% 定义函数输入
+Start_Point = [Start_X,Start_Y,Start_Theta];
+End_Point = [End_X,End_Y,End_Theta];
+
+Avoid_Center = [Dx,Dy];
+Aim = [Cx,Cy];
+
+%% 寻找Dubins路径
+param = DubinsAvoid(Start_Point, End_Point,Avoid_Center,Aim,r,R,Stepsize);
+end
